@@ -1,4 +1,4 @@
-USE web_ecommerce 
+USE mat-bang-tgdd
 
 DROP TABLE users
 
