@@ -120,3 +120,28 @@ GO
 
 EXEC dbo.FilterSieuThi N'',0,5,'','','','','';
 GO
+
+
+DROP PROCEDURE GetSieuThisById;
+GO
+
+CREATE PROCEDURE GetSieuThisById
+    @Id INT
+AS
+BEGIN
+    DECLARE @Query NVARCHAR(MAX);
+	IF @Id IS NOT NULL AND @Id >= 0
+	BEGIN
+    SET @Query = '
+        SELECT TOP 1 mast, tenst, dcst, dmhh, sbntST, SbnlST, NguoiCN
+        FROM sieuthi
+        WHERE mast = @Id';
+	END
+    -- Execute the dynamic SQL query
+    EXEC sp_executesql @Query, N'@Id INT', @Id;
+END;
+GO
+
+
+EXEC dbo.GetSieuThisById -1;
+GO

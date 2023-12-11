@@ -32,5 +32,18 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Controllers
                 return BadRequest(new { ex.Message });
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getSieuThiById(int id)
+        {
+            try
+            {
+                OutputGetSieuThiByIdViewModel sieuthi = await sieuThiService.getSieuThiById(id);
+                return Ok(sieuthi);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
+        }
     }
 }

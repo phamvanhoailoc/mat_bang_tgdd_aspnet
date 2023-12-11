@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using WebAPI_project_banhang.Modules.M_Sieu_Thi.Models;
 using WebAPI_project_banhang.Modules.M_Sieu_Thi.ViewModels;
@@ -67,6 +68,16 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Repositories
 
                 return record != null ? Convert.ToInt32(record) : 0;
             }
+        }
+
+        public async Task<SieuThiById> GetSieuThiById( int id)
+        {
+            string sql = "EXECUTE dbo.GetSieuThisById @Id";
+
+            var result =  await _context.SieuThiById.FromSqlRaw(sql,
+                    new SqlParameter("@Id", id) 
+                ).ToListAsync();
+            return result.AsEnumerable().FirstOrDefault();
         }
     }
 }

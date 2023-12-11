@@ -10,5 +10,6 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Models
         {
         }
         public DbSet<SieuThi> SieuThi { get; set; }
+        public DbSet<SieuThiById> SieuThiById { get; set; }
     }
 }

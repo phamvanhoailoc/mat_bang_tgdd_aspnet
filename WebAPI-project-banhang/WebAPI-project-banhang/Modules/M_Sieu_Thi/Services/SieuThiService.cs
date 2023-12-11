@@ -22,5 +22,10 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Services
         {
             return _sender.Send(new GetSieuThiListQuery(filterSieuThiViewModel));
         }
+
+        public Task<OutputGetSieuThiByIdViewModel> getSieuThiById(int id)
+        {
+            return _sender.Send(new GetSieuThiByIdQuery(id));
+        }
     }
 }
