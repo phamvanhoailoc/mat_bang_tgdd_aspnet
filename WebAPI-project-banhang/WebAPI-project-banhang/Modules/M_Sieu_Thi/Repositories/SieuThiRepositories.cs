@@ -7,7 +7,6 @@ using System.Data;
 using System.Threading.Tasks;
 using WebAPI_project_banhang.Modules.M_Sieu_Thi.Models;
 using WebAPI_project_banhang.Modules.M_Sieu_Thi.ViewModels;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Repositories
@@ -22,28 +21,9 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Repositories
             _context = context;
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public async Task<GetSieuThiListViewModel> getSieuThiListRepo(FilterSieuThiViewModel filterSieuThiViewModel)
-        {
-            string fromDate = filterSieuThiViewModel?.RageDate?.fromDate.ToString() ?? "";
-            string toDate = filterSieuThiViewModel?.RageDate?.toDate.ToString() ?? "";
-
-            GetSieuThiListViewModel getSieuThiListViewModel = new GetSieuThiListViewModel();
-
-            var countRecordTask = CountRecordSieuThiAsync(filterSieuThiViewModel, fromDate, toDate);
-            var filterSieuThiTask = FilterSieuThiAsync(filterSieuThiViewModel, fromDate, toDate);
-
-            // Sử dụng Task.WhenAll để thực hiện đồng thời cả lệnh gọi ADO.NET và Entity Framework
-            await Task.WhenAll(countRecordTask, filterSieuThiTask);
-
-            getSieuThiListViewModel.TotalCount = countRecordTask.Result;
-      
-            getSieuThiListViewModel.sieuThi = filterSieuThiTask.Result;   
-
-            return getSieuThiListViewModel;
-        }
 
         //xử lí lấy danh sách siêu thị theo bộ lọc
-        private async Task<List<SieuThi>> FilterSieuThiAsync(FilterSieuThiViewModel filterSieuThiViewModel, string fromDate, string toDate)
+        public async Task<List<SieuThi>> FilterSieuThiAsync(FilterSieuThiViewModel filterSieuThiViewModel, string fromDate, string toDate)
         {
 
             string sql = "EXECUTE dbo.FilterSieuThi @keyword, @page, @limit, @fromDate, @toDate, @tinhst, @huyenst, @xast ";
@@ -65,7 +45,7 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Repositories
         }
 
         //xử lí đếm bản ghi của siêu thị theo bộ lọc
-        private async Task<int> CountRecordSieuThiAsync(FilterSieuThiViewModel filterSieuThiViewModel, string fromDate, string toDate)
+        public async Task<int> CountRecordSieuThiAsync(FilterSieuThiViewModel filterSieuThiViewModel, string fromDate, string toDate)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
