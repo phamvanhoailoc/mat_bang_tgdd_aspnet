@@ -10,5 +10,6 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Repositories
         public Task<List<SieuThi>> FilterSieuThiAsync(FilterSieuThiViewModel filterSieuThiViewModel, string fromDate, string toDate);
         public Task<int> CountRecordSieuThiAsync(FilterSieuThiViewModel filterSieuThiViewModel, string fromDate, string toDate);
         public Task<SieuThiById> GetSieuThiById(int id);
+        public Task<bool> UpdateSieuThiById(InputCapNhatSieuThiViewModel inputCapNhatSieuThiViewModel, int id);
     }
 }

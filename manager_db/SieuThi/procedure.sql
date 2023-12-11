@@ -129,19 +129,60 @@ CREATE PROCEDURE GetSieuThisById
     @Id INT
 AS
 BEGIN
-    DECLARE @Query NVARCHAR(MAX);
 	IF @Id IS NOT NULL AND @Id >= 0
 	BEGIN
+    DECLARE @Query NVARCHAR(MAX);
     SET @Query = '
         SELECT TOP 1 mast, tenst, dcst, dmhh, sbntST, SbnlST, NguoiCN
         FROM sieuthi
         WHERE mast = @Id';
-	END
-    -- Execute the dynamic SQL query
+		-- Execute the dynamic SQL query
     EXEC sp_executesql @Query, N'@Id INT', @Id;
+	END  
+	ELSE
+    BEGIN
+        -- If @Id is NULL or less than 0, return an empty result set
+        SELECT NULL AS mast, NULL AS tenst, NULL AS dcst, NULL AS dmhh, NULL AS sbntST, NULL AS SbnlST, NULL AS NguoiCN;
+    END
 END;
 GO
 
 
-EXEC dbo.GetSieuThisById -1;
+EXEC dbo.GetSieuThisById 1;
 GO
+
+
+DROP PROCEDURE UpdateSieuThiById;
+GO
+
+
+CREATE PROCEDURE UpdateSieuThiById
+    @Id INT,
+    @NewSbntST DECIMAL,
+    @NewSbnlST DECIMAL,
+	@NewNguoiCN INT,
+    @Success BIT OUTPUT
+AS
+BEGIN
+    SET @Success = 0; -- Mặc định là thất bại
+
+    IF @Id IS NOT NULL AND @Id >= 0
+    BEGIN
+        BEGIN TRY
+            UPDATE sieuthi
+            SET sbntST = @NewSbntST,
+                SbnlST = @NewSbnlST,
+				NguoiCN = @NewNguoiCN
+            WHERE mast = @Id;
+
+            SET @Success = 1; -- Đánh dấu là thành công
+        END TRY
+        BEGIN CATCH
+            -- Xử lý lỗi nếu có
+        END CATCH
+    END
+END;
+GO
+
+
+EXEC UpdateSieuThiById @Id = 1, @NewSbntST = 500, @NewSbnlST = 700;

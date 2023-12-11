@@ -45,5 +45,19 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Controllers
                 return BadRequest(new { ex.Message });
             }
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> updateSieuThiById([FromBody] InputCapNhatSieuThiViewModel inputCapNhatSieuThiViewModel, int id)
+        {
+            try
+            {
+                bool result = await sieuThiService.updateSieuThiById(inputCapNhatSieuThiViewModel, id);
+                if (result == false) return BadRequest();
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
+        }
     }
 }

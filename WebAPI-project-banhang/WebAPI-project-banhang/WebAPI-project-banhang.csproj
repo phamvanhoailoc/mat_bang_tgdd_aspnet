@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="assets\file-upload\" />
     <Folder Include="Modules\M_File_System\Queries\" />
-    <Folder Include="Modules\M_Sieu_Thi\Commands\" />
   </ItemGroup>
 
 </Project>

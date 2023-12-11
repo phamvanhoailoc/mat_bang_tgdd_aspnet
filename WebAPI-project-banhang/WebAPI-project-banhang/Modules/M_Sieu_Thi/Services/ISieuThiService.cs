@@ -9,5 +9,6 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Services
     {
         Task<GetSieuThiListViewModel> getListSieuThi(FilterSieuThiViewModel filterSieuThiViewModel);
         Task<OutputGetSieuThiByIdViewModel> getSieuThiById(int id);
+        Task<bool> updateSieuThiById(InputCapNhatSieuThiViewModel inputCapNhatSieuThiViewModel, int id);
     }
 }

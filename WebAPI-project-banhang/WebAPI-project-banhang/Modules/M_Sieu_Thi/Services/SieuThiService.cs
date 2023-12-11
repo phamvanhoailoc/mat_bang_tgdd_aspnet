@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI_project_banhang.Modules.M_Sieu_Thi.Commands;
 using WebAPI_project_banhang.Modules.M_Sieu_Thi.Queries;
 using WebAPI_project_banhang.Modules.M_Sieu_Thi.ViewModels;
 using WebAPI_project_banhang.Modules.M_Users.Queries;
@@ -26,6 +27,11 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Services
         public Task<OutputGetSieuThiByIdViewModel> getSieuThiById(int id)
         {
             return _sender.Send(new GetSieuThiByIdQuery(id));
+        }
+
+        public Task<bool> updateSieuThiById(InputCapNhatSieuThiViewModel inputCapNhatSieuThiViewModel, int id)
+        {
+            return _sender.Send(new UpdateSieuThiByIdCommand(inputCapNhatSieuThiViewModel,id));
         }
     }
 }

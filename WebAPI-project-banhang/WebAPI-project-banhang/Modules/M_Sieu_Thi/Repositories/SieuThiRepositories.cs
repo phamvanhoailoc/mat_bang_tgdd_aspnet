@@ -79,5 +79,34 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Repositories
                 ).ToListAsync();
             return result.AsEnumerable().FirstOrDefault();
         }
+
+        public async Task<bool> UpdateSieuThiById(InputCapNhatSieuThiViewModel inputCapNhatSieuThiViewModel, int id)
+        {
+            await using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                //mở connect db
+
+                SqlCommand cmd = new SqlCommand("dbo.UpdateSieuThiById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@NewSbntST", inputCapNhatSieuThiViewModel.SbntST);
+                cmd.Parameters.AddWithValue("@NewSbnlST", inputCapNhatSieuThiViewModel.SbnlST);
+                cmd.Parameters.AddWithValue("@NewNguoiCN", inputCapNhatSieuThiViewModel.NguoiCN);
+                // Thêm tham số output
+                SqlParameter successParam = new SqlParameter("@Success", SqlDbType.Bit);
+                successParam.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(successParam);
+                con.Open();
+
+                //xử dụng nonquery khi không có kq return
+                cmd.ExecuteNonQuery();
+
+                bool success = Convert.ToBoolean(cmd.Parameters["@success"].Value);
+
+                //đóng connect db
+                con.Close();
+                return success;
+            }
+        }
     }
 }
