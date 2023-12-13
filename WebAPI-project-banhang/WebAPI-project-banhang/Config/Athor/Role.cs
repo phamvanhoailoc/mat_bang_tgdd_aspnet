@@ -2,8 +2,8 @@
 {
     public class Role
     {
-        public string GIAMDOC = "100";
-        public string MATBANG = "102";
-        public string SIEUTHI = "103";
+        public const string GIAMDOC = "100";
+        public const string MATBANG = "102";
+        public const string SIEUTHI = "103";
     }
 }
