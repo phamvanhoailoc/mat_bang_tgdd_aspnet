@@ -1,13 +1,8 @@
 ﻿using System;
+using WebAPI_project_banhang.Lib.Utils;
 
 namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.ViewModels
 {
-
-    public class RageDate
-    {
-        public DateTime? fromDate { get; set; }
-        public DateTime? toDate { get; set; }
-    }
     public class FilterSieuThiViewModel
     {
         public int? page { get; set; }
