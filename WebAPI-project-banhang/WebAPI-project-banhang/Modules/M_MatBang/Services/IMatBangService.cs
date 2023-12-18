@@ -8,5 +8,6 @@ namespace WebAPI_project_banhang.Modules.M_MatBang.Services
     public interface IMatBangService
     {
         Task<MatBangOutputViewModel> GetMatBangList(MatBangInputViewModel matBangInputViewModel);
+        Task<bool> CreateMatBang(CreateMatBangInputViewModel createMatBangInputViewModel);
     }
 }
