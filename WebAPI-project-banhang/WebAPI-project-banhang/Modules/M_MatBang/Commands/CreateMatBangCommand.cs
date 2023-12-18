@@ -23,9 +23,10 @@ namespace WebAPI_project_banhang.Modules.M_MatBang.Commands
         {
             _getMatBangListRepositories = getMatBangListRepositories;
         }
-        public Task<bool> Handle(CreateMatBangCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateMatBangCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            bool result = await _getMatBangListRepositories.CreateMatBang(request._createMatBangInputViewModel);
+            return result;
         }
     }
 }

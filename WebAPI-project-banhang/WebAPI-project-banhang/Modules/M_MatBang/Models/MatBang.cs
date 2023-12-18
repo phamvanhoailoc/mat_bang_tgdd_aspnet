@@ -11,7 +11,7 @@ namespace WebAPI_project_banhang.Modules.M_MatBang.Models
         public int MaMB { get; set; }
 
         [Column("machiphi")]
-        public int? MaChiPhi { get; set; }
+        public string? MaChiPhi { get; set; }
 
         [Column("tenmb")]
         public string? TenMB { get; set; }

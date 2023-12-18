@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAPI_project_banhang.Modules.M_MatBang.Models;
 using WebAPI_project_banhang.Modules.M_MatBang.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using WebAPI_project_banhang.Modules.M_Sieu_Thi.ViewModels;
 
 namespace WebAPI_project_banhang.Modules.M_MatBang.Repositories
 {
@@ -64,6 +65,43 @@ namespace WebAPI_project_banhang.Modules.M_MatBang.Repositories
                 con.Close();
 
                 return record != null ? Convert.ToInt32(record) : 0;
+            }
+        }
+
+        public async Task<bool> CreateMatBang(CreateMatBangInputViewModel createMatBangInputViewModel)
+        {
+            await using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                //mở connect db
+
+                SqlCommand cmd = new SqlCommand("dbo.CreateMatBang", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@machiphi", createMatBangInputViewModel.MaChiPhi);
+                cmd.Parameters.AddWithValue("@tenmb", createMatBangInputViewModel.TenMB);
+                cmd.Parameters.AddWithValue("@dcmb", createMatBangInputViewModel.DcMB);
+                cmd.Parameters.AddWithValue("@tinhmb", createMatBangInputViewModel.TinhMB);
+                cmd.Parameters.AddWithValue("@huyenmb", createMatBangInputViewModel.HuyenMB);
+                cmd.Parameters.AddWithValue("@xamb", createMatBangInputViewModel.XaMB);
+                cmd.Parameters.AddWithValue("@dtmb", createMatBangInputViewModel.dientichMB);
+                cmd.Parameters.AddWithValue("@ttmb", createMatBangInputViewModel.thetichMB);
+                cmd.Parameters.AddWithValue("@phaplymb", createMatBangInputViewModel.phaplymb);
+                cmd.Parameters.AddWithValue("@hethonggiaothongmb", createMatBangInputViewModel.hethonggiaothongmb);
+                cmd.Parameters.AddWithValue("@pcccmb", createMatBangInputViewModel.pcccmb);
+                cmd.Parameters.AddWithValue("@ngayCN", createMatBangInputViewModel.ngayCN);
+                // Thêm tham số output
+                SqlParameter successParam = new SqlParameter("@KetQua", SqlDbType.Bit);
+                successParam.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(successParam);
+                con.Open();
+
+                //xử dụng nonquery khi không có kq return
+                cmd.ExecuteNonQuery();
+
+                bool success = Convert.ToBoolean(cmd.Parameters["@KetQua"].Value);
+
+                //đóng connect db
+                con.Close();
+                return success;
             }
         }
     }
