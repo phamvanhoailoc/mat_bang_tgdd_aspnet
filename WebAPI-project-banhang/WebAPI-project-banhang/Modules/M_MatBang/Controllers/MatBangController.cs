@@ -32,5 +32,19 @@ namespace WebAPI_project_banhang.Modules.M_MatBang.Controllers
                 return BadRequest(new { ex.Message });
             }
         }
+        [HttpPost("post")]
+        public async Task<IActionResult> PostMatBang(CreateMatBangInputViewModel createMatBangInputViewModel)
+        {
+            try
+            {
+                bool result = await _matBangService.CreateMatBang(createMatBangInputViewModel);
+                if (result) return Ok();
+                return BadRequest();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
+        }
     }
 }

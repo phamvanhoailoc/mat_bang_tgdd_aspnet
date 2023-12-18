@@ -1,8 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebAPI_project_banhang.Modules.M_MatBang.Models;
+using WebAPI_project_banhang.Modules.M_MatBang.Commands;
 using WebAPI_project_banhang.Modules.M_MatBang.Queries;
 using WebAPI_project_banhang.Modules.M_MatBang.ViewModels;
 
@@ -15,6 +13,11 @@ namespace WebAPI_project_banhang.Modules.M_MatBang.Services
         public MatBangService(ISender sender)
         {
             _sender = sender;
+        }
+
+        public Task<bool> CreateMatBang(CreateMatBangInputViewModel createMatBangInputViewModel)
+        {
+            return _sender.Send(new CreateMatBangCommand(createMatBangInputViewModel));
         }
 
         public Task<MatBangOutputViewModel> GetMatBangList(MatBangInputViewModel matBangInputViewModel)
