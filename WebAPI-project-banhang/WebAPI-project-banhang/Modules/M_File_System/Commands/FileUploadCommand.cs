@@ -36,13 +36,13 @@ namespace WebAPI_project_banhang.Modules.M_File_System.Commands
         }
         public async Task<List<ResFileUpload>> Handle(FileUploadCommand request, CancellationToken cancellationToken)
         {
-            if (request._fileUploadViewModel.file.Count == 0) { 
+            if (request._fileUploadViewModel.files.Count == 0) { 
                throw new ArgumentException("Invalid images");
             }
 
             List<FileUpload> files = new List<FileUpload>();
-            for (int i = 0; i < request._fileUploadViewModel.file.Count; i++) { 
-                var file = request._fileUploadViewModel.file[i];
+            for (int i = 0; i < request._fileUploadViewModel.files.Count; i++) { 
+                var file = request._fileUploadViewModel.files[i];
 
                 //kiểm tra size file
                 if (file.Length > 10000000) throw new ArgumentException("Max size is 10MB");
@@ -50,6 +50,9 @@ namespace WebAPI_project_banhang.Modules.M_File_System.Commands
                 //kiểm tra type có giống với type đã khai báo
                 var viewType = UploadFile.ParseViewType(file.ContentType);
                 if (viewType !=  request._fileUploadViewModel.type) throw new ArgumentException("Type different from description");
+
+                bool checkhex = await UploadFile.CheckHexImage(file);
+                if (checkhex != true) throw new ArgumentException("Not is Image!!");
 
                 var fileExt = Path.GetExtension(file.FileName);
 

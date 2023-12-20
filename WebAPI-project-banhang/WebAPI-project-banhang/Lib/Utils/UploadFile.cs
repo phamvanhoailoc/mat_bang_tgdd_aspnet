@@ -97,6 +97,49 @@ namespace WebAPI_project_banhang.Lib.Utils
                 return Task.FromResult(false);
             }
         }
+        private static readonly Dictionary<string, List<byte[]>> _fileSignature = new Dictionary<string, List<byte[]>>
+        {
+            { ".png", new List<byte[]> { new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A } } },
+            { ".jpeg", new List<byte[]>
+                {
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
+                }
+            },
+            { ".jpg", new List<byte[]>
+                {
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
+                }
+            },
+
+        };
+
+        //xử lí check xem file hop le hay khong
+        public static Task<bool> CheckHexImage(dynamic file)
+        {
+            // Đọc byte từ file
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                var fileSignature = stream.ToArray();
+
+                // Check if the file signature matches any known signature
+                var fileExtension = Path.GetExtension(file.FileName);
+                _fileSignature.TryGetValue(fileExtension, out List<byte[]> validSignatures);
+                if (validSignatures != null)
+                {
+
+                    return Task.FromResult(true); // File extension not supported.
+
+                }
+
+                return Task.FromResult(false); // File extension not supported.
+            }
+
+        }
 
 
     }

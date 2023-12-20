@@ -28,9 +28,8 @@ namespace WebAPI_project_banhang
         {
             var stringConnectdb = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BanhangContext>(options => options.UseSqlServer(stringConnectdb));
-            //khai báo services, repositories vào group
-            services.AddUsers();
-            services.AddFileSystem();
+            //khai báo services
+            services.AddAppServices();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -44,6 +43,7 @@ namespace WebAPI_project_banhang
         {
             if (env.IsDevelopment())
             {
+                app.UseCors(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
                 app.UseMiddleware<DeveloperJwtMiddleware>();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();

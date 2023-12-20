@@ -19,7 +19,9 @@
 
   <ItemGroup>
     <Folder Include="assets\file-upload\" />
+    <Folder Include="Modules\M_DanhGia\Commands\" />
     <Folder Include="Modules\M_File_System\Queries\" />
+    <Folder Include="Modules\M_TieuChi\Commands\" />
   </ItemGroup>
 
 </Project>
