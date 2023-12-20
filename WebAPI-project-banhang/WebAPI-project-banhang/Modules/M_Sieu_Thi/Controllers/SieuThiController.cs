@@ -20,7 +20,7 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Controllers
             sieuThiService = iSieuThiService;
         }
 
-        [JwtAuthorize(Role.SIEUTHI)]
+        //[JwtAuthorize(Role.SIEUTHI)]
         [HttpPost("get")]
         public async Task<IActionResult> getSieuThi([FromBody] FilterSieuThiViewModel filterSieuThiViewModel)
         {
@@ -34,7 +34,7 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Controllers
                 return BadRequest(new { ex.Message });
             }
         }
-        [JwtAuthorize(Role.SIEUTHI)]
+        //[JwtAuthorize(Role.SIEUTHI)]
         [HttpGet("{id}")]
         public async Task<IActionResult> getSieuThiById(int id)
         {
@@ -48,7 +48,7 @@ namespace WebAPI_project_banhang.Modules.M_Sieu_Thi.Controllers
                 return BadRequest(new { ex.Message });
             }
         }
-        [JwtAuthorize(Role.SIEUTHI)]
+        //[JwtAuthorize(Role.SIEUTHI)]
         [HttpPut("{id}")]
         public async Task<IActionResult> updateSieuThiById([FromBody] InputCapNhatSieuThiViewModel inputCapNhatSieuThiViewModel, int id)
         {

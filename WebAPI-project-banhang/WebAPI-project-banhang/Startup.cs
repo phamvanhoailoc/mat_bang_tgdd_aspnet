@@ -43,6 +43,7 @@ namespace WebAPI_project_banhang
         {
             if (env.IsDevelopment())
             {
+                app.UseCors(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
                 app.UseMiddleware<DeveloperJwtMiddleware>();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
